@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <link rel="stylesheet" href="css/MarkerCluster.css">
         <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <style>
         html, body, #map {
@@ -27,6 +28,7 @@
         </div>
         <script src="js/qgis2web_expressions.js"></script>
         <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
         <script src="js/leaflet.rotatedMarker.js"></script>
         <script src="js/leaflet.pattern.js"></script>
         <script src="js/leaflet-hash.js"></script>
@@ -34,12 +36,13 @@
         <script src="js/rbush.min.js"></script>
         <script src="js/labelgun.min.js"></script>
         <script src="js/labels.js"></script>
-        <script src="js/leaflet.wms.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
         <script src="js/leaflet-measure.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
-        <script src="data/Pertemoyenneensolthaan_4.js"></script>
-        <script src="data/PrfecturesCommunes_5.js"></script>
-        <script src="data/Mesuresdegestiondurabledesterres_6.js"></script>
+        <script src="data/Limitedubassinversant_2.js"></script>
+        <script src="data/Classedespertesensolparcarreaude5kmx5km_3.js"></script>
+        <script src="data/PrfecturesCommunes_4.js"></script>
+        <script src="data/Ensembledemesures_5.js"></script>
         <script>
         var highlightLayer;
         function highlightFeature(e) {
@@ -48,7 +51,7 @@
         }
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        })
+        }).fitBounds([[6.180122873673346,-1.0693409106953895],[9.369839403103912,3.686609525357041]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
@@ -67,55 +70,11 @@
         .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
-            if (bounds_group.getLayers().length) {
-                map.fitBounds(bounds_group.getBounds());
-            }
         }
-        map.createPane('pane_TopographicWMSbyterrestris_0');
-        map.getPane('pane_TopographicWMSbyterrestris_0').style.zIndex = 400;
-        var layer_TopographicWMSbyterrestris_0 = L.WMS.layer("http://ows.terrestris.de/osm/service", "TOPO-WMS", {
-            pane: 'pane_TopographicWMSbyterrestris_0',
-            format: 'image/png',
-            uppercase: true,
-            transparent: true,
-            continuousWorld : true,
-            tiled: true,
-            info_format: 'text/html',
-            opacity: 1,
-            identify: false,
-            attribution: '',
-        });
-        map.addLayer(layer_TopographicWMSbyterrestris_0);
-        map.createPane('pane_OpenStreetMapmonochrome_1');
-        map.getPane('pane_OpenStreetMapmonochrome_1').style.zIndex = 401;
-        var layer_OpenStreetMapmonochrome_1 = L.tileLayer('http://a.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
-            pane: 'pane_OpenStreetMapmonochrome_1',
-            opacity: 1.0,
-            attribution: '',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 18
-        });
-        layer_OpenStreetMapmonochrome_1;
-        map.addLayer(layer_OpenStreetMapmonochrome_1);
-        map.createPane('pane_OSMStandard_2');
-        map.getPane('pane_OSMStandard_2').style.zIndex = 402;
-        var layer_OSMStandard_2 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            pane: 'pane_OSMStandard_2',
-            opacity: 1.0,
-            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
-            minZoom: 1,
-            maxZoom: 28,
-            minNativeZoom: 0,
-            maxNativeZoom: 19
-        });
-        layer_OSMStandard_2;
-        map.addLayer(layer_OSMStandard_2);
-        map.createPane('pane_StamenTerrain_3');
-        map.getPane('pane_StamenTerrain_3').style.zIndex = 403;
-        var layer_StamenTerrain_3 = L.tileLayer('http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png', {
-            pane: 'pane_StamenTerrain_3',
+        map.createPane('pane_StamenTerrain_0');
+        map.getPane('pane_StamenTerrain_0').style.zIndex = 400;
+        var layer_StamenTerrain_0 = L.tileLayer('http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png', {
+            pane: 'pane_StamenTerrain_0',
             opacity: 1.0,
             attribution: '<a href="http://maps.stamen.com/">Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under ODbL</a>',
             minZoom: 1,
@@ -123,9 +82,22 @@
             minNativeZoom: 0,
             maxNativeZoom: 20
         });
-        layer_StamenTerrain_3;
-        map.addLayer(layer_StamenTerrain_3);
-        function pop_Pertemoyenneensolthaan_4(feature, layer) {
+        layer_StamenTerrain_0;
+        map.addLayer(layer_StamenTerrain_0);
+        map.createPane('pane_OSMStandard_1');
+        map.getPane('pane_OSMStandard_1').style.zIndex = 401;
+        var layer_OSMStandard_1 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OSMStandard_1',
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OSMStandard_1;
+        map.addLayer(layer_OSMStandard_1);
+        function pop_Limitedubassinversant_2(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -140,120 +112,49 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Perte moyenne</th>\
-                        <td>' + (feature.properties['perte_mean'] !== null ? autolinker.link(feature.properties['perte_mean'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Id'] !== null ? autolinker.link(feature.properties['Id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area'] !== null ? autolinker.link(feature.properties['Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Perimetre'] !== null ? autolinker.link(feature.properties['Perimetre'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Coef_KG'] !== null ? autolinker.link(feature.properties['Coef_KG'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Pertemoyenneensolthaan_4_0(feature) {
-            if (feature.properties['perte_mean'] >= 0.000000 && feature.properties['perte_mean'] <= 0.002605 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
+        function style_Limitedubassinversant_2_0() {
+            return {
+                pane: 'pane_Limitedubassinversant_2',
                 opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
+                color: 'rgba(35,35,35,1.0)',
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(64,64,64,0.49)',
+                weight: 1.0, 
+                fillOpacity: 0,
                 interactive: true,
-            }
-            }
-            if (feature.properties['perte_mean'] >= 0.002605 && feature.properties['perte_mean'] <= 0.003241 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(162,162,162,0.49)',
-                interactive: true,
-            }
-            }
-            if (feature.properties['perte_mean'] >= 0.003241 && feature.properties['perte_mean'] <= 0.004840 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(228,228,228,0.49)',
-                interactive: true,
-            }
-            }
-            if (feature.properties['perte_mean'] >= 0.004840 && feature.properties['perte_mean'] <= 0.031486 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(251,219,205,0.49)',
-                interactive: true,
-            }
-            }
-            if (feature.properties['perte_mean'] >= 0.031486 && feature.properties['perte_mean'] <= 0.206014 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(236,132,110,0.49)',
-                interactive: true,
-            }
-            }
-            if (feature.properties['perte_mean'] >= 0.206014 && feature.properties['perte_mean'] <= 36.546038 ) {
-                return {
-                pane: 'pane_Pertemoyenneensolthaan_4',
-                opacity: 1,
-                color: 'rgba(35,35,35,0.49)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(202,0,32,0.49)',
-                interactive: true,
-            }
             }
         }
-        map.createPane('pane_Pertemoyenneensolthaan_4');
-        map.getPane('pane_Pertemoyenneensolthaan_4').style.zIndex = 404;
-        map.getPane('pane_Pertemoyenneensolthaan_4').style['mix-blend-mode'] = 'normal';
-        var layer_Pertemoyenneensolthaan_4 = new L.geoJson(json_Pertemoyenneensolthaan_4, {
+        map.createPane('pane_Limitedubassinversant_2');
+        map.getPane('pane_Limitedubassinversant_2').style.zIndex = 402;
+        map.getPane('pane_Limitedubassinversant_2').style['mix-blend-mode'] = 'normal';
+        var layer_Limitedubassinversant_2 = new L.geoJson(json_Limitedubassinversant_2, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Pertemoyenneensolthaan_4',
-            layerName: 'layer_Pertemoyenneensolthaan_4',
-            pane: 'pane_Pertemoyenneensolthaan_4',
-            onEachFeature: pop_Pertemoyenneensolthaan_4,
-            style: style_Pertemoyenneensolthaan_4_0,
+            dataVar: 'json_Limitedubassinversant_2',
+            layerName: 'layer_Limitedubassinversant_2',
+            pane: 'pane_Limitedubassinversant_2',
+            onEachFeature: pop_Limitedubassinversant_2,
+            style: style_Limitedubassinversant_2_0,
         });
-        bounds_group.addLayer(layer_Pertemoyenneensolthaan_4);
-        map.addLayer(layer_Pertemoyenneensolthaan_4);
-        function pop_PrfecturesCommunes_5(feature, layer) {
+        bounds_group.addLayer(layer_Limitedubassinversant_2);
+        map.addLayer(layer_Limitedubassinversant_2);
+        function pop_Classedespertesensolparcarreaude5kmx5km_3(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -268,15 +169,142 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2"><strong>Préfecture / Communes</strong><br />' + (feature.properties['ADM2_FR'] !== null ? autolinker.link(feature.properties['ADM2_FR'].toLocaleString()) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Pente_mean'] !== null ? autolinker.link(feature.properties['Pente_mean'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Texture_ma'] !== null ? autolinker.link(feature.properties['Texture_ma'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Perte_sol_'] !== null ? autolinker.link(feature.properties['Perte_sol_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Pop.total_'] !== null ? autolinker.link(feature.properties['Pop.total_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['classe_dom'] !== null ? autolinker.link(feature.properties['classe_dom'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['area'] !== null ? autolinker.link(feature.properties['area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['densite'] !== null ? autolinker.link(feature.properties['densite'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['prec_mean'] !== null ? autolinker.link(feature.properties['prec_mean'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['m_gdtid'] !== null ? autolinker.link(feature.properties['m_gdtid'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['m_gdtarray'] !== null ? autolinker.link(feature.properties['m_gdtarray'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_PrfecturesCommunes_5_0() {
+        function style_Classedespertesensolparcarreaude5kmx5km_3_0(feature) {
+            if (feature.properties['Perte_sol_'] >= 0.000000 && feature.properties['Perte_sol_'] <= 0.142528 ) {
+                return {
+                pane: 'pane_Classedespertesensolparcarreaude5kmx5km_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.513)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(250,250,250,0.513)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Perte_sol_'] >= 0.142528 && feature.properties['Perte_sol_'] <= 0.221460 ) {
+                return {
+                pane: 'pane_Classedespertesensolparcarreaude5kmx5km_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.513)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(168,168,168,0.513)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Perte_sol_'] >= 0.221460 && feature.properties['Perte_sol_'] <= 2.347628 ) {
+                return {
+                pane: 'pane_Classedespertesensolparcarreaude5kmx5km_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.513)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(87,87,87,0.513)',
+                interactive: true,
+            }
+            }
+            if (feature.properties['Perte_sol_'] >= 2.347628 && feature.properties['Perte_sol_'] <= 151.010545 ) {
+                return {
+                pane: 'pane_Classedespertesensolparcarreaude5kmx5km_3',
+                opacity: 1,
+                color: 'rgba(35,35,35,0.513)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(5,5,5,0.513)',
+                interactive: true,
+            }
+            }
+        }
+        map.createPane('pane_Classedespertesensolparcarreaude5kmx5km_3');
+        map.getPane('pane_Classedespertesensolparcarreaude5kmx5km_3').style.zIndex = 403;
+        map.getPane('pane_Classedespertesensolparcarreaude5kmx5km_3').style['mix-blend-mode'] = 'normal';
+        var layer_Classedespertesensolparcarreaude5kmx5km_3 = new L.geoJson(json_Classedespertesensolparcarreaude5kmx5km_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Classedespertesensolparcarreaude5kmx5km_3',
+            layerName: 'layer_Classedespertesensolparcarreaude5kmx5km_3',
+            pane: 'pane_Classedespertesensolparcarreaude5kmx5km_3',
+            onEachFeature: pop_Classedespertesensolparcarreaude5kmx5km_3,
+            style: style_Classedespertesensolparcarreaude5kmx5km_3_0,
+        });
+        bounds_group.addLayer(layer_Classedespertesensolparcarreaude5kmx5km_3);
+        map.addLayer(layer_Classedespertesensolparcarreaude5kmx5km_3);
+        function pop_PrfecturesCommunes_4(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2"><strong>Commune/Préfecture</strong><br />' + (feature.properties['ADM2_FR'] !== null ? autolinker.link(feature.properties['ADM2_FR'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_PrfecturesCommunes_4_0() {
             return {
-                pane: 'pane_PrfecturesCommunes_5',
+                pane: 'pane_PrfecturesCommunes_4',
                 opacity: 1,
                 color: 'rgba(255,127,0,1.0)',
                 dashArray: '10,5',
@@ -287,21 +315,21 @@
                 interactive: true,
             }
         }
-        map.createPane('pane_PrfecturesCommunes_5');
-        map.getPane('pane_PrfecturesCommunes_5').style.zIndex = 405;
-        map.getPane('pane_PrfecturesCommunes_5').style['mix-blend-mode'] = 'normal';
-        var layer_PrfecturesCommunes_5 = new L.geoJson(json_PrfecturesCommunes_5, {
+        map.createPane('pane_PrfecturesCommunes_4');
+        map.getPane('pane_PrfecturesCommunes_4').style.zIndex = 404;
+        map.getPane('pane_PrfecturesCommunes_4').style['mix-blend-mode'] = 'normal';
+        var layer_PrfecturesCommunes_4 = new L.geoJson(json_PrfecturesCommunes_4, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_PrfecturesCommunes_5',
-            layerName: 'layer_PrfecturesCommunes_5',
-            pane: 'pane_PrfecturesCommunes_5',
-            onEachFeature: pop_PrfecturesCommunes_5,
-            style: style_PrfecturesCommunes_5_0,
+            dataVar: 'json_PrfecturesCommunes_4',
+            layerName: 'layer_PrfecturesCommunes_4',
+            pane: 'pane_PrfecturesCommunes_4',
+            onEachFeature: pop_PrfecturesCommunes_4,
+            style: style_PrfecturesCommunes_4_0,
         });
-        bounds_group.addLayer(layer_PrfecturesCommunes_5);
-        map.addLayer(layer_PrfecturesCommunes_5);
-        function pop_Mesuresdegestiondurabledesterres_6(feature, layer) {
+        bounds_group.addLayer(layer_PrfecturesCommunes_4);
+        map.addLayer(layer_PrfecturesCommunes_4);
+        function pop_Ensembledemesures_5(feature, layer) {
             layer.on({
                 mouseout: function(e) {
                     if (typeof layer.closePopup == 'function') {
@@ -316,151 +344,246 @@
             });
             var popupContent = '<table>\
                     <tr>\
-                        <th scope="row">Pente (%)</th>\
-                        <td>' + (feature.properties['pente_majo'] !== null ? autolinker.link(feature.properties['pente_majo'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Densité de population (habitant / km²)</th>\
+                        <td>' + (feature.properties['densite'] !== null ? autolinker.link(feature.properties['densite'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Perte moyenne en sol (t.ha.an)</strong><br />' + (feature.properties['perte_mean'] !== null ? autolinker.link(feature.properties['perte_mean'].toLocaleString()) : '') + '</td>\
-                    </tr>\
-                    <tr>\
-                        <th scope="row">Précipitation moyenne annuelle (mm)</th>\
+                        <th scope="row">Précipitation annuelle moyenne (mm)</th>\
                         <td>' + (feature.properties['prec_mean'] !== null ? autolinker.link(feature.properties['prec_mean'].toLocaleString()) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <th scope="row">Mesures GDT</th>\
-                        <td>' + (feature.properties['array_agg'] !== null ? autolinker.link(feature.properties['array_agg'].toLocaleString()) : '') + '</td>\
+                        <th scope="row">Ensemble de mesure GDT</th>\
+                        <td>' + (feature.properties['m_gdtarray'] !== null ? autolinker.link(feature.properties['m_gdtarray'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Texture du sol dominant</th>\
+                        <td>' + (feature.properties['text_lab'] !== null ? autolinker.link(feature.properties['text_lab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Classe d\'occupation des sols</th>\
+                        <td>' + (feature.properties['clas_label'] !== null ? autolinker.link(feature.properties['clas_label'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Valeur de pente (%)</th>\
+                        <td>' + (feature.properties['Pente'] !== null ? autolinker.link(feature.properties['Pente'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Perte en sol (tonne par hectare par an)</th>\
+                        <td>' + (feature.properties['perte_sol'] !== null ? autolinker.link(feature.properties['perte_sol'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Numéro du carreau</th>\
+                        <td>' + (feature.properties['id_'] !== null ? autolinker.link(feature.properties['id_'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Mesuresdegestiondurabledesterres_6_0(feature) {
-            switch(String(feature.properties['array_agg'])) {
-                case 'Cordon pierreux avec haie vive, Amenagement forestier, Billon cloisonné, Travail minimum du sol':
+        function style_Ensembledemesures_5_0(feature) {
+            switch(String(feature.properties['m_gdtarray'])) {
+                case 'Cordon pierreux avec haie vive, Amenagement forestier, Billon cloisonné':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'diamond',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(133,182,111,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Cordon pierreux avec haie vive, Billon cloisonné':
+                    return {
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'triangle',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(68,1,84,1.0)',
+                fillColor: 'rgba(211,14,63,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Cordon pierreux avec haie vive, Jachère avec rotation et paillage, Parc arbore avec parcage naturel et paillage, Amenagement forestier, Regeneration naturelle assistee':
+                    return {
+                pane: 'pane_Ensembledemesures_5',
+                radius: 10.0,
+                stroke: false,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(31,120,180,1.0)',
                 interactive: true,
             }
                     break;
                 case 'Cordon pierreux avec haie vive, Jachère avec rotation et paillage, Parc arbore avec parcage naturel et paillage, Regeneration naturelle assistee':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'square',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(70,44,123,1.0)',
+                fillColor: 'rgba(121,212,188,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Cordon pierreux avec haie vive, Reduction du travail du sol':
+                case 'Cordon pierreux avec haie vive, Reduction du travail du sol, Culture en couloir, Brise vent, Labour suivant les courbes de niveau, Billon cloisonné':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(58,82,139,1.0)',
+                fillColor: 'rgba(255,127,0,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Cordon pierreux avec haie vive, Reduction du travail du sol, Culture en couloir, Brise vent, Labour suivant les courbes de niveau, Billon cloisonné, Travail minimum du sol':
+                case 'Cordon pierreux avec haie vive, Reduction du travail du sol, Labour suivant les courbes de niveau':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'triangle',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(43,114,142,1.0)',
+                fillColor: 'rgba(51,160,44,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Cordon pierreux avec haie vive, Reduction du travail du sol, Labour suivant les courbes de niveau, Travail minimum du sol':
+                case 'Cordon pierreux avec haie vive, Retenue d’eau, Regeneration naturelle assistee':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'diamond',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(32,144,141,1.0)',
+                fillColor: 'rgba(31,120,180,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Cordon pierreux avec haie vive, Retenue d’eau, Paillage, Reduction du travail du sol, Regeneration naturelle assistee':
+                case 'Foresterie urbaine':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(39,174,128,1.0)',
+                fillColor: 'rgba(41,221,98,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Reboisement':
+                case 'Protection des berges':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
-                stroke: false,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'x',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(227,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(93,201,98,1.0)',
+                fillColor: 'rgba(205,58,25,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Reduction du travail du sol, Labour suivant les courbes de niveau, Travail minimum du sol':
+                case 'Protection/Reboisement de forêt':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
-                stroke: false,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'x',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(51,160,44,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(171,220,50,1.0)',
+                fillColor: 'rgba(205,58,25,1.0)',
                 interactive: true,
             }
                     break;
-                case 'Travail minimum du sol':
+                case 'Reduction du travail du sol, Labour suivant les courbes de niveau':
                     return {
-                pane: 'pane_Mesuresdegestiondurabledesterres_6',
-                radius: 7.6,
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'square',
+                radius: 10.0,
                 stroke: false,
                 fill: true,
                 fillOpacity: 1,
-                fillColor: 'rgba(253,231,37,1.0)',
+                fillColor: 'rgba(145,82,45,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Regeneration naturelle assistee':
+                    return {
+                pane: 'pane_Ensembledemesures_5',
+                shape: 'x',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(255,127,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(205,58,25,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Tranchees combinees avec des haies vivantes ou des lignes de graminees.':
+                    return {
+                pane: 'pane_Ensembledemesures_5',
+                radius: 10.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(98,218,82,1.0)',
                 interactive: true,
             }
                     break;
             }
         }
-        map.createPane('pane_Mesuresdegestiondurabledesterres_6');
-        map.getPane('pane_Mesuresdegestiondurabledesterres_6').style.zIndex = 406;
-        map.getPane('pane_Mesuresdegestiondurabledesterres_6').style['mix-blend-mode'] = 'normal';
-        var layer_Mesuresdegestiondurabledesterres_6 = new L.geoJson(json_Mesuresdegestiondurabledesterres_6, {
+        map.createPane('pane_Ensembledemesures_5');
+        map.getPane('pane_Ensembledemesures_5').style.zIndex = 405;
+        map.getPane('pane_Ensembledemesures_5').style['mix-blend-mode'] = 'normal';
+        var layer_Ensembledemesures_5 = new L.geoJson(json_Ensembledemesures_5, {
             attribution: '',
             interactive: true,
-            dataVar: 'json_Mesuresdegestiondurabledesterres_6',
-            layerName: 'layer_Mesuresdegestiondurabledesterres_6',
-            pane: 'pane_Mesuresdegestiondurabledesterres_6',
-            onEachFeature: pop_Mesuresdegestiondurabledesterres_6,
+            dataVar: 'json_Ensembledemesures_5',
+            layerName: 'layer_Ensembledemesures_5',
+            pane: 'pane_Ensembledemesures_5',
+            onEachFeature: pop_Ensembledemesures_5,
             pointToLayer: function (feature, latlng) {
                 var context = {
                     feature: feature,
                     variables: {}
                 };
-                return L.circleMarker(latlng, style_Mesuresdegestiondurabledesterres_6_0(feature));
+                return L.shapeMarker(latlng, style_Ensembledemesures_5_0(feature));
             },
         });
-        var cluster_Mesuresdegestiondurabledesterres_6 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+        var cluster_Ensembledemesures_5 = new L.MarkerClusterGroup({showCoverageOnHover: false,
             spiderfyDistanceMultiplier: 2});
-        cluster_Mesuresdegestiondurabledesterres_6.addLayer(layer_Mesuresdegestiondurabledesterres_6);
+        cluster_Ensembledemesures_5.addLayer(layer_Ensembledemesures_5);
 
-        bounds_group.addLayer(layer_Mesuresdegestiondurabledesterres_6);
-        cluster_Mesuresdegestiondurabledesterres_6.addTo(map);
+        bounds_group.addLayer(layer_Ensembledemesures_5);
+        cluster_Ensembledemesures_5.addTo(map);
             var title = new L.Control();
             title.onAdd = function (map) {
                 this._div = L.DomUtil.create('div', 'info');
@@ -471,19 +594,19 @@
                 this._div.innerHTML = '<h2>Mesures GDT antiérosive dans le bassin versant du Mono</h2>';
             };
             title.addTo(map);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'Mesures de gestion durable des terres<br /><table><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveAmenagementforestierBilloncloisonnéTravailminimumdusol0.png" /></td><td>Cordon pierreux avec haie vive, Amenagement forestier, Billon cloisonné, Travail minimum du sol</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveJachèreavecrotationetpaillageParcarboreavecparcagenatureletpaillageRegenerationnaturelleassistee1.png" /></td><td>Cordon pierreux avec haie vive, Jachère avec rotation et paillage, Parc arbore avec parcage naturel et paillage, Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveReductiondutravaildusol2.png" /></td><td>Cordon pierreux avec haie vive, Reduction du travail du sol</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveReductiondutravaildusolCultureencouloirBriseventLaboursuivantlescourbesdeniveauBilloncloisonnéTravailminimumdusol3.png" /></td><td>Cordon pierreux avec haie vive, Reduction du travail du sol, Culture en couloir, Brise vent, Labour suivant les courbes de niveau, Billon cloisonné, Travail minimum du sol</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveReductiondutravaildusolLaboursuivantlescourbesdeniveauTravailminimumdusol4.png" /></td><td>Cordon pierreux avec haie vive, Reduction du travail du sol, Labour suivant les courbes de niveau, Travail minimum du sol</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_CordonpierreuxavechaieviveRetenuedeauPaillageReductiondutravaildusolRegenerationnaturelleassistee5.png" /></td><td>Cordon pierreux avec haie vive, Retenue d’eau, Paillage, Reduction du travail du sol, Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_Reboisement6.png" /></td><td>Reboisement</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_ReductiondutravaildusolLaboursuivantlescourbesdeniveauTravailminimumdusol7.png" /></td><td>Reduction du travail du sol, Labour suivant les courbes de niveau, Travail minimum du sol</td></tr><tr><td style="text-align: center;"><img src="legend/Mesuresdegestiondurabledesterres_6_Travailminimumdusol8.png" /></td><td>Travail minimum du sol</td></tr></table>': cluster_Mesuresdegestiondurabledesterres_6,'<img src="legend/PrfecturesCommunes_5.png" /> Préfectures / Communes': layer_PrfecturesCommunes_5,'Perte moyenne en sol (t.ha.an)<br /><table><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_0000260.png" /></td><td>0 - 0,0026</td></tr><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_000260003241.png" /></td><td>0,0026 - 0,00324</td></tr><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_0003240004842.png" /></td><td>0,00324 - 0,00484</td></tr><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_0004840031493.png" /></td><td>0,00484 - 0,03149</td></tr><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_0031490206014.png" /></td><td>0,03149 - 0,20601</td></tr><tr><td style="text-align: center;"><img src="legend/Pertemoyenneensolthaan_4_02060136546045.png" /></td><td>0,20601 - 36,54604</td></tr></table>': layer_Pertemoyenneensolthaan_4,"Stamen Terrain": layer_StamenTerrain_3,"OSM Standard": layer_OSMStandard_2,"OpenStreetMap monochrome": layer_OpenStreetMapmonochrome_1,"Topographic WMS - by terrestris": layer_TopographicWMSbyterrestris_0,}).addTo(map);
+        L.control.layers(baseMaps,{'Ensemble de mesures<br /><table><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveAmenagementforestierBilloncloisonné0.png" /></td><td>Cordon pierreux avec haie vive, Amenagement forestier, Billon cloisonné</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveBilloncloisonné1.png" /></td><td>Cordon pierreux avec haie vive, Billon cloisonné</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveJachèreavecrotationetpaillageParcarboreavecparcagenatureletpaillageAmenagementforestierRegenerationnaturelleassistee2.png" /></td><td>Cordon pierreux avec haie vive, Jachère avec rotation et paillage, Parc arbore avec parcage naturel et paillage, Amenagement forestier, Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveJachèreavecrotationetpaillageParcarboreavecparcagenatureletpaillageRegenerationnaturelleassistee3.png" /></td><td>Cordon pierreux avec haie vive, Jachère avec rotation et paillage, Parc arbore avec parcage naturel et paillage, Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveReductiondutravaildusolCultureencouloirBriseventLaboursuivantlescourbesdeniveauBilloncloisonné4.png" /></td><td>Cordon pierreux avec haie vive, Reduction du travail du sol, Culture en couloir, Brise vent, Labour suivant les courbes de niveau, Billon cloisonné</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveReductiondutravaildusolLaboursuivantlescourbesdeniveau5.png" /></td><td>Cordon pierreux avec haie vive, Reduction du travail du sol, Labour suivant les courbes de niveau</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_CordonpierreuxavechaieviveRetenuedeauRegenerationnaturelleassistee6.png" /></td><td>Cordon pierreux avec haie vive, Retenue d’eau, Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_Foresterieurbaine7.png" /></td><td>Foresterie urbaine</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_Protectiondesberges8.png" /></td><td>Protection des berges</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_ProtectionReboisementdeforêt9.png" /></td><td>Protection/Reboisement de forêt</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_ReductiondutravaildusolLaboursuivantlescourbesdeniveau10.png" /></td><td>Reduction du travail du sol, Labour suivant les courbes de niveau</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_Regenerationnaturelleassistee11.png" /></td><td>Regeneration naturelle assistee</td></tr><tr><td style="text-align: center;"><img src="legend/Ensembledemesures_5_Trancheescombineesavecdeshaiesvivantesoudeslignesdegraminees12.png" /></td><td>Tranchees combinees avec des haies vivantes ou des lignes de graminees.</td></tr></table>': cluster_Ensembledemesures_5,'<img src="legend/PrfecturesCommunes_4.png" /> Préfectures / Communes': layer_PrfecturesCommunes_4,'Classe des pertes en sol par carreau de 5 km x 5 km<br /><table><tr><td style="text-align: center;"><img src="legend/Classedespertesensolparcarreaude5kmx5km_3_00140.png" /></td><td>0 - 0,14</td></tr><tr><td style="text-align: center;"><img src="legend/Classedespertesensolparcarreaude5kmx5km_3_0140221.png" /></td><td>0,14 - 0,22</td></tr><tr><td style="text-align: center;"><img src="legend/Classedespertesensolparcarreaude5kmx5km_3_0222352.png" /></td><td>0,22 - 2,35</td></tr><tr><td style="text-align: center;"><img src="legend/Classedespertesensolparcarreaude5kmx5km_3_235151013.png" /></td><td>2,35 - 151,01</td></tr></table>': layer_Classedespertesensolparcarreaude5kmx5km_3,'<img src="legend/Limitedubassinversant_2.png" /> Limite du bassin versant': layer_Limitedubassinversant_2,"OSM Standard": layer_OSMStandard_1,"Stamen Terrain": layer_StamenTerrain_0,}).addTo(map);
         setBounds();
-        resetLabels([layer_PrfecturesCommunes_5]);
-        map.on("zoomend", function(){
-            resetLabels([layer_PrfecturesCommunes_5]);
-        });
-        map.on("layeradd", function(){
-            resetLabels([layer_PrfecturesCommunes_5]);
-        });
-        map.on("layerremove", function(){
-            resetLabels([layer_PrfecturesCommunes_5]);
-        });
         </script>
     </body>
 </html>
